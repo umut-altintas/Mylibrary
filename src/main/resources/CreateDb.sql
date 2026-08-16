@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS authors(
+author_id INTEGER PRIMARY KEY AUTOINCREMENT,
+author_name TEXT UNIQUE,
+author_score TEXT DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS books(
+author_id INTEGER NOT NULL,
+book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+book_name TEXT UNIQUE,
+book_added_date DATE NOT NULL,
+book_type TEXT DEFAULT NULL,
+book_language TEXT DEFAULT NULL,
+book_page_number INTEGER DEFAULT NULL,
+FOREIGN KEY(author_id) REFERENCES authors(author_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS finished_books(
+book_id INTEGER NOT NULL,
+book_finished_date DATE NOT NULL,
+book_read_time TEXT NOT NULL,
+book_score INTEGER DEFAULT NULL,
+book_summary TEXT DEFAULT NULL,
+FOREIGN KEY (book_id) REFERENCES books(book_id) ON DELETE CASCADE
+);
