@@ -7,7 +7,7 @@ public class DeleteFromDb {
     public static void author(String url, int id){
         String sql = "DELETE FROM authors WHERE author_id = ?";
         try(var conn = DriverManager.getConnection(url);var ps = conn.prepareStatement(sql)) {
-            ps.setInt(1,1);
+            ps.setInt(1,id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -2,6 +2,7 @@ package UI;
 
 import CRUD.InsertIntoDb;
 import InputHandling.StringHandler;
+import org.apache.commons.lang3.ObjectUtils;
 import org.sqlite.util.StringUtils;
 
 import javax.swing.*;
@@ -57,7 +58,12 @@ public class AddAuthorUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == submit){
             String name = StringHandler.Name(nameField.getText());
-            InsertIntoDb.author(url, name);
+            if(name.isBlank()){
+                JOptionPane.showMessageDialog(this,"All fields must filled!");
+            }else{
+                InsertIntoDb.author(url, name);
+                JOptionPane.showMessageDialog(this, "Author successfully added!");
+            }
         }
     }
 }
