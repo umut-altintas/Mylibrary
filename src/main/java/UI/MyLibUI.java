@@ -1,15 +1,21 @@
 package UI;
 
+import CRUD.CreateDb;
+import UI.Add.AddAuthorUI;
+import UI.Table.AuthorsTableForUI;
+import UI.Table.BooksTableForUI;
+import UI.Table.FinishedBooksTableForUI;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static CRUD.ConnectToDb.url;
+
 public class MyLibUI extends JFrame implements ActionListener{
     JMenuItem authorAdd;
     JMenuItem authorShowAll;
-    JMenuItem bookAdd;
     JMenuItem bookShowAll;
-    JMenuItem finBookAdd;
     JMenuItem finBookShowAll;
     public MyLibUI(){
         this.setTitle("My library");
@@ -28,23 +34,17 @@ public class MyLibUI extends JFrame implements ActionListener{
 
         authorAdd = new JMenuItem("Add");
         authorShowAll = new JMenuItem("Show all");
-        bookAdd = new JMenuItem("Add");
         bookShowAll = new JMenuItem("Show all");
-        finBookAdd = new JMenuItem("Add");
         finBookShowAll = new JMenuItem("Show all");
 
         authorAdd.addActionListener(this);
         authorShowAll.addActionListener(this);
-        bookAdd.addActionListener(this);
         bookShowAll.addActionListener(this);
-        finBookAdd.addActionListener(this);
         finBookShowAll.addActionListener(this);
 
         authorMenu.add(authorAdd);
         authorMenu.add(authorShowAll);
-        bookMenu.add(bookAdd);
         bookMenu.add(bookShowAll);
-        finishedBookMenu.add(finBookAdd);
         finishedBookMenu.add(finBookShowAll);
 
         menuBar.add(authorMenu);
@@ -57,6 +57,7 @@ public class MyLibUI extends JFrame implements ActionListener{
 
 
     public static void main(String[] args) {
+        CreateDb.create(url);
         SwingUtilities.invokeLater(() -> {
             MyLibUI ui = new MyLibUI();
             ui.setVisible(true);
@@ -95,13 +96,6 @@ public class MyLibUI extends JFrame implements ActionListener{
         if(e.getSource() == authorAdd){
             this.getContentPane().removeAll();
             JPanel panel = new AddAuthorUI();
-            this.add(panel);
-            this.revalidate();
-            this.repaint();
-        }
-        if(e.getSource() == bookAdd){
-            this.getContentPane().removeAll();
-            JPanel panel = new AddBookUI();
             this.add(panel);
             this.revalidate();
             this.repaint();

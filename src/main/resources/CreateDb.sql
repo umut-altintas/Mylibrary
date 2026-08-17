@@ -7,7 +7,7 @@ author_score TEXT DEFAULT NULL
 CREATE TABLE IF NOT EXISTS books(
 author_id INTEGER NOT NULL,
 book_id INTEGER PRIMARY KEY AUTOINCREMENT,
-book_name TEXT UNIQUE,
+book_name TEXT,
 book_added_date DATE NOT NULL,
 book_type TEXT DEFAULT NULL,
 book_language TEXT DEFAULT NULL,
@@ -16,7 +16,7 @@ FOREIGN KEY(author_id) REFERENCES authors(author_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS finished_books(
-book_id INTEGER NOT NULL,
+book_id INTEGER PRIMARY KEY,
 book_finished_date DATE NOT NULL,
 book_read_time TEXT NOT NULL,
 book_score INTEGER DEFAULT NULL,

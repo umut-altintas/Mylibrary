@@ -1,8 +1,9 @@
-package UI;
+package UI.Add;
 
 import CRUD.InsertIntoDb;
 import InputHandling.StringHandler;
-import org.sqlite.util.StringUtils;
+import UI.Table.AuthorsTableForUI;
+import UI.Table.FinishedBooksTableForUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,7 +58,18 @@ public class AddAuthorUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == submit){
             String name = StringHandler.Name(nameField.getText());
-            InsertIntoDb.author(url, name);
+            if(name.isBlank()){
+                JOptionPane.showMessageDialog(this,"All fields must filled!");
+            }else{
+                InsertIntoDb.author(url, name);
+                JOptionPane.showMessageDialog(this, name+" successfully added!");
+                //Change panel
+                this.removeAll();
+                JPanel panel = new AuthorsTableForUI();
+                this.add(panel);
+                this.revalidate();
+                this.repaint();
+            }
         }
     }
 }
