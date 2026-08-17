@@ -110,8 +110,10 @@ public class AddBookUI extends JPanel implements ActionListener {
                     int book_page_number = Integer.parseInt(temp_bpn);
                     InsertIntoDb.book(url, (Integer) AuthorsTableForUI.author_id, book_name, book_type, book_language, book_page_number);
                     JOptionPane.showMessageDialog(this, book_name+" successfully added!");
+                    nameField.setText("");typeField.setText("");languageField.setText("");pageNumberField.setText("");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Page number must be an integer!");
+                    pageNumberField.setText("");
                 }
             }
         }

@@ -1,6 +1,5 @@
 package UI;
 
-import CRUD.ConnectToDb;
 import CRUD.DeleteFromDb;
 import CRUD.UpdateDb;
 import InputHandling.StringHandler;
@@ -32,17 +31,18 @@ public class AuthorsTableForUI extends JPanel implements MouseListener, ActionLi
         JScrollPane scrollPane = new JScrollPane(table);
         this.add(scrollPane, BorderLayout.CENTER);
 
+        //Popup menu
         popupMenu = new JPopupMenu();
         //Add book menuItem
         addBook = new JMenuItem("Add book");
         addBook.addActionListener(this);
         popupMenu.add(addBook);
         //Delete author menuItem
-        deleteAuthor = new JMenuItem("Delete author");
+        deleteAuthor = new JMenuItem("Delete");
         deleteAuthor.addActionListener(this);
         popupMenu.add(deleteAuthor);
         //Edit author menuItem
-        editAuthor = new JMenuItem("Edit author");
+        editAuthor = new JMenuItem("Edit");
         editAuthor.addActionListener(this);
         popupMenu.add(editAuthor);
     }
@@ -90,7 +90,8 @@ public class AuthorsTableForUI extends JPanel implements MouseListener, ActionLi
             this.repaint();
         }
         if (e.getSource() == deleteAuthor){
-            int input  = JOptionPane.showConfirmDialog(this, "Do you want to delete this author?", "Delete author", JOptionPane.YES_NO_OPTION);
+            int input  = JOptionPane.showConfirmDialog(this, "Do you want to delete this author?",
+                    "Delete author", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
             if(input == 0){
                 DeleteFromDb.author(url, (Integer) author_id);
                 refreshPage();

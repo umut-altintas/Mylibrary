@@ -63,6 +63,7 @@ public class AddAuthorUI extends JPanel implements ActionListener {
             }else{
                 InsertIntoDb.author(url, name);
                 JOptionPane.showMessageDialog(this, name+" successfully added!");
+                nameField.setText("");
             }
         }
     }
