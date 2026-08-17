@@ -62,7 +62,7 @@ public class AddAuthorUI extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this,"All fields must filled!");
             }else{
                 InsertIntoDb.author(url, name);
-                JOptionPane.showMessageDialog(this, "Author successfully added!");
+                JOptionPane.showMessageDialog(this, name+" successfully added!");
             }
         }
     }

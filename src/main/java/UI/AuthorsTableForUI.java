@@ -2,6 +2,8 @@ package UI;
 
 import CRUD.ConnectToDb;
 import CRUD.DeleteFromDb;
+import CRUD.UpdateDb;
+import InputHandling.StringHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +19,8 @@ public class AuthorsTableForUI extends JPanel implements MouseListener, ActionLi
     JPopupMenu popupMenu;
     JMenuItem addBook;
     JMenuItem deleteAuthor;
-    public static Object book_id;
+    JMenuItem editAuthor;
+    public static Object author_id;
 
     public AuthorsTableForUI() {
         this.setLayout(new BorderLayout());
@@ -39,12 +42,21 @@ public class AuthorsTableForUI extends JPanel implements MouseListener, ActionLi
         deleteAuthor.addActionListener(this);
         popupMenu.add(deleteAuthor);
         //Edit author menuItem
-
+        editAuthor = new JMenuItem("Edit author");
+        editAuthor.addActionListener(this);
+        popupMenu.add(editAuthor);
+    }
+    public void refreshPage(){
+        this.removeAll();
+        JPanel panel = new AuthorsTableForUI();
+        this.add(panel);
+        this.revalidate();
+        this.repaint();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        book_id = table.getValueAt(table.getSelectedRow(), 0);
+        author_id = table.getValueAt(table.getSelectedRow(), 0);
         popupMenu.show(this, e.getX(), e.getY());
     }
 
@@ -70,25 +82,32 @@ public class AuthorsTableForUI extends JPanel implements MouseListener, ActionLi
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == addBook) {
-            System.out.println(book_id);
+        if (e.getSource() == addBook){
             this.removeAll();
-
             JPanel panel = new AddBookUI();
             this.add(panel);
-
             this.revalidate();
             this.repaint();
         }
         if (e.getSource() == deleteAuthor){
-            DeleteFromDb.author(url, (Integer) book_id);
-            this.removeAll();
+            int input  = JOptionPane.showConfirmDialog(this, "Do you want to delete this author?", "Delete author", JOptionPane.YES_NO_OPTION);
+            if(input == 0){
+                DeleteFromDb.author(url, (Integer) author_id);
+                refreshPage();
+            }else{
+                refreshPage();
+            }
 
-            JPanel panel = new AuthorsTableForUI();
-            this.add(panel);
-
-            this.revalidate();
-            this.repaint();
+        }
+        if (e.getSource() == editAuthor){
+            String input = JOptionPane.showInputDialog(this, "New name: ", "Edit Author", JOptionPane.PLAIN_MESSAGE);
+            if(input.isBlank()){
+                JOptionPane.showMessageDialog(this, "All field must be filled!");
+            }else{
+                String name = StringHandler.Name(input);
+                UpdateDb.authorName(url, (Integer) author_id, name);
+                refreshPage();
+            }
         }
     }
 }
