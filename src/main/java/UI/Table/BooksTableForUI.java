@@ -1,7 +1,10 @@
-package UI;
+package UI.Table;
 
 import CRUD.ConnectToDb;
 import CRUD.DeleteFromDb;
+import UI.Add.AddFinishedBookUI;
+import UI.DataForUI;
+import UI.Edit.EditBookUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +21,11 @@ public class BooksTableForUI extends JPanel implements MouseListener, ActionList
     JMenuItem deleteBook;
     JMenuItem editBook;
     JMenuItem addToFinBook;
-    Object book_id;
+    public static Object book_id;
+    public static Object book_name;
+    public static Object book_type;
+    public static Object book_language;
+    public static Object book_page_number;
     public BooksTableForUI(){
         this.setLayout(new BorderLayout());
         DataForUI d = new DataForUI();
@@ -60,22 +67,37 @@ public class BooksTableForUI extends JPanel implements MouseListener, ActionList
             if(input == 0){
                 DeleteFromDb.book(url, (Integer) book_id);
                 refreshPage();
-            }else{
-                refreshPage();
             }
         }
         if (e.getSource() == editBook){
-
+            this.removeAll();
+            JPanel panel = new EditBookUI();
+            this.add(panel);
+            this.revalidate();
+            this.repaint();
         }
         if (e.getSource() == addToFinBook){
-
+            if (ConnectToDb.getFinishedBookByID(url, (Integer) book_id) != 0) {
+                JOptionPane.showMessageDialog(new AddFinishedBookUI(),"This book is already finished!",
+                        "Error", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                this.removeAll();
+                JPanel panel = new AddFinishedBookUI();
+                this.add(panel);
+                this.revalidate();
+                this.repaint();
+            }
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        book_id = table.getValueAt(table.getSelectedRow(), 0);
+        book_id = table.getValueAt(table.getSelectedRow(), 1);
         popupMenu.show(this, e.getX(), e.getY());
+        book_name = table.getValueAt(table.getSelectedRow(), 2);
+        book_type = table.getValueAt(table.getSelectedRow(), 4);
+        book_language = table.getValueAt(table.getSelectedRow(), 5);
+        book_page_number = table.getValueAt(table.getSelectedRow(), 6);
     }
 
     @Override

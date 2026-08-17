@@ -1,7 +1,10 @@
-package UI;
+package UI.Add;
 
 import CRUD.InsertIntoDb;
 import InputHandling.StringHandler;
+import UI.Table.AuthorsTableForUI;
+import UI.Table.BooksTableForUI;
+import UI.Table.FinishedBooksTableForUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -110,7 +113,12 @@ public class AddBookUI extends JPanel implements ActionListener {
                     int book_page_number = Integer.parseInt(temp_bpn);
                     InsertIntoDb.book(url, (Integer) AuthorsTableForUI.author_id, book_name, book_type, book_language, book_page_number);
                     JOptionPane.showMessageDialog(this, book_name+" successfully added!");
-                    nameField.setText("");typeField.setText("");languageField.setText("");pageNumberField.setText("");
+                    //Change panel
+                    this.removeAll();
+                    JPanel panel = new BooksTableForUI();
+                    this.add(panel);
+                    this.revalidate();
+                    this.repaint();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Page number must be an integer!");
                     pageNumberField.setText("");

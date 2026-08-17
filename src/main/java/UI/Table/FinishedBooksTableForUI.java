@@ -1,6 +1,7 @@
-package UI;
+package UI.Table;
 
 import CRUD.ConnectToDb;
+import UI.DataForUI;
 
 import javax.swing.*;
 import java.awt.*;

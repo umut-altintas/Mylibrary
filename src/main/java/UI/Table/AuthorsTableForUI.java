@@ -1,8 +1,10 @@
-package UI;
+package UI.Table;
 
 import CRUD.DeleteFromDb;
 import CRUD.UpdateDb;
 import InputHandling.StringHandler;
+import UI.Add.AddBookUI;
+import UI.DataForUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -95,10 +97,7 @@ public class AuthorsTableForUI extends JPanel implements MouseListener, ActionLi
             if(input == 0){
                 DeleteFromDb.author(url, (Integer) author_id);
                 refreshPage();
-            }else{
-                refreshPage();
             }
-
         }
         if (e.getSource() == editAuthor){
             String input = JOptionPane.showInputDialog(this, "New name: ", "Edit Author", JOptionPane.PLAIN_MESSAGE);

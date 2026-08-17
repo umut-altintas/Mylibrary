@@ -65,10 +65,26 @@ public class ConnectToDb {
                 String book_read_time = rs.getString("book_read_time");
                 int book_score = rs.getInt("book_score");
                 String book_summary = rs.getString("book_summary");
+                finishedBooks.add(new FinishedBooks(book_id, book_finished_date, book_read_time, book_score, book_summary));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return finishedBooks;
+    }
+    public static int getFinishedBookByID(String url, int book_id){
+        String sql = "SELECT fb.book_id FROM finished_books AS fb WHERE fb.book_id = ?";
+        try(var conn = DriverManager.getConnection(url);var ps = conn.prepareStatement(sql)){
+            ps.setInt(1, book_id);
+            ResultSet rs = ps.executeQuery();
+            String book_i = rs.getString("book_id");
+            try{
+                return Integer.parseInt(book_i);
+            } catch (NumberFormatException e) {
+                return 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

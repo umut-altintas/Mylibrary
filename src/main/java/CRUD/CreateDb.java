@@ -8,7 +8,8 @@ public class CreateDb {
     public static void create(String url) {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement()) {
-            String filePath = "src/main/resources/CRUD.CreateDb.sql";
+            stmt.execute("PRAGMA foreign_keys = ON");
+            String filePath = "src/main/resources/CreateDb.sql";
             BufferedReader br = new BufferedReader(new FileReader(filePath));
 
             // String Builder to build the query line by line.

@@ -1,9 +1,9 @@
-package UI;
+package UI.Add;
 
 import CRUD.InsertIntoDb;
 import InputHandling.StringHandler;
-import org.apache.commons.lang3.ObjectUtils;
-import org.sqlite.util.StringUtils;
+import UI.Table.AuthorsTableForUI;
+import UI.Table.FinishedBooksTableForUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,7 +63,12 @@ public class AddAuthorUI extends JPanel implements ActionListener {
             }else{
                 InsertIntoDb.author(url, name);
                 JOptionPane.showMessageDialog(this, name+" successfully added!");
-                nameField.setText("");
+                //Change panel
+                this.removeAll();
+                JPanel panel = new AuthorsTableForUI();
+                this.add(panel);
+                this.revalidate();
+                this.repaint();
             }
         }
     }
